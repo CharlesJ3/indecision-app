@@ -1,56 +1,100 @@
-console.log('App.js is running!');
+// console.log('App.js is running!');
 
-// create app object with two properties; title/subtitle (STRINGS)
+// const app = {
+//   title: 'Indecision A;;',
+//   subtitle: 'Put your life in the hands of a computer',
+//   options: ['One', 'Two']
+// };
 
-let mainTemplate = {
-  title: 'Title',
-  subtitle: 'Subtitle',
-  listOne: 'List Item One',
-  listTwo: 'List Item Two'
-};
+// let mainTemplate = {
+//   title: 'Title',
+//   subtitle: 'Subtitle',
+//   listOne: 'List Item One',
+//   listTwo: 'List Item Two'
+// };
 
-// Use title and subtitle in template instead of safesit shit
+// let user = {
+//   name: 'Charles',
+//   age: 33,
+//   location: 'Colorado Springs'
+// };
 
-var template = (
-  <div>
-    <h1>{mainTemplate.title}</h1>
-    <p>{mainTemplate.subtitle}</p>
-
-    <ol>
-      <li>{mainTemplate.listOne}</li>
-      <li>{mainTemplate.listTwo}</li>
-    </ol>
-  </div>
-);
+// const updateList = () => {
 
 
+// };
 
-let checkForLocation = function(location, age){
-  if(location !== '' && age > 18){
-    return location;
-  }
-  else{
-    return 'Unknown';
+// const onFormSubmit = (e) => {
+//   e.preventDefault();
+
+//   const option = e.target.elements.option.value;
+
+//   if (option) {
+//     app.options.push(option);
+//     e.target.elements.option.value = '';
+//     renderTemplate();
+//   }
+// };
+
+// const removeAllItems = () => {
+//   app.options = [];
+//   renderTemplate();
+// };
+
+
+// const appRoot = document.getElementById('app');
+
+// const renderTemplate = () => {
+//   const template = (
+//     <div>
+//       <h1></h1>
+//       <p></p>
+//       <p>{app.options.length}</p>
+//       <ol className="listOfItems">
+//         <li>Item One</li>
+//         <li>Item Two</li>
+//       </ol>
+//       <form onSubmit={onFormSubmit}>
+//         <input type="text" name="option" />
+//         <button>Add Button</button>
+//       </form>
+//        <button onClick={removeAllItems}>Remove All</button>
+//     </div>
+//   );
+
+//   ReactDOM.render(template, appRoot);
+// }
+
+// renderTemplate();
+
+
+/* Chuck's Personal Section */
+
+var userInformation = {
+  name: 'Charles',
+  age: 33,
+  randomNumber: function() {
+    userInformation.age = Math.ceil(Math.random() * 20);
+    renderTemplate();
   }
 }
 
+const addThisUp = () => {
+  
+}
 
-let user = {
-  name: 'Charles',
-  age: 32,
-  location: 'Colorado Springs'
-};
+const appRoot = document.getElementById('app');
 
+const renderTemplate = () => {
+  const template = (
+    <div>
+      <p>Name: {userInformation.name}</p>
+      <p>Age: {userInformation.age}</p>
+      <button onClick={userInformation.randomNumber}>Randomize Your Age</button>
+    </div>
+  );
 
+  ReactDOM.render(template, appRoot);
+}
 
-var templateTwo = (
-  <div>
-    <h1>{user.name}</h1>
-    <p>Age: {user.age}</p>
-    <p>Location: {checkForLocation(user.location, user.age)}</p>
-  </div>
-);
-
-var appRoot = document.getElementById('app');
-
-ReactDOM.render(templateTwo, appRoot);
+renderTemplate();

@@ -1,114 +1,369 @@
 'use strict';
 
-// console.log('App.js is running!');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// const app = {
-//   title: 'Indecision A;;',
-//   subtitle: 'Put your life in the hands of a computer',
-//   options: ['One', 'Two']
-// };
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// let mainTemplate = {
-//   title: 'Title',
-//   subtitle: 'Subtitle',
-//   listOne: 'List Item One',
-//   listTwo: 'List Item Two'
-// };
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-// let user = {
-//   name: 'Charles',
-//   age: 33,
-//   location: 'Colorado Springs'
-// };
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// const updateList = () => {
+var IndecisionApp = function (_React$Component) {
+  _inherits(IndecisionApp, _React$Component);
 
+  function IndecisionApp(props) {
+    _classCallCheck(this, IndecisionApp);
 
-// };
+    var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
-// const onFormSubmit = (e) => {
-//   e.preventDefault();
+    _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
+    _this.handlePick = _this.handlePick.bind(_this);
+    _this.handleAddOption = _this.handleAddOption.bind(_this);
 
-//   const option = e.target.elements.option.value;
+    _this.state = {
+      options: []
+    };
+    return _this;
+  }
 
-//   if (option) {
-//     app.options.push(option);
-//     e.target.elements.option.value = '';
-//     renderTemplate();
+  _createClass(IndecisionApp, [{
+    key: 'handleDeleteOptions',
+    value: function handleDeleteOptions() {
+      this.setState(function () {
+        return {
+          options: []
+        };
+      });
+    }
+
+    //Create method handlePick - pass down to action and then bind it, here and onClick for the button
+    //Randomly pick an option and alert it
+
+  }, {
+    key: 'handlePick',
+    value: function handlePick() {
+      var randomNum = Math.floor(Math.random() * this.state.options.length);
+      var option = this.state.options[randomNum];
+      alert(option);
+    }
+  }, {
+    key: 'handleAddOption',
+    value: function handleAddOption(option) {
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.concat(option)
+        };
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var title = 'Indecision';
+      var subtitle = 'Put your life in the hands of a computer';
+
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(Header, { title: title, subtitle: subtitle }),
+        React.createElement(Action, {
+          hasOptions: this.state.options.length > 0,
+
+          handlePick: this.handlePick
+        }),
+        React.createElement(Options, {
+          options: this.state.options,
+
+          handleDeleteOptions: this.handleDeleteOptions
+        }),
+        React.createElement(AddOption, {
+          handleAddOption: this.handleAddOption
+        })
+      );
+    }
+  }]);
+
+  return IndecisionApp;
+}(React.Component);
+
+var Header = function (_React$Component2) {
+  _inherits(Header, _React$Component2);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'h1',
+          null,
+          this.props.title
+        ),
+        React.createElement(
+          'h3',
+          null,
+          this.props.subtitle
+        )
+      );
+    }
+  }]);
+
+  return Header;
+}(React.Component);
+
+var Action = function (_React$Component3) {
+  _inherits(Action, _React$Component3);
+
+  function Action() {
+    _classCallCheck(this, Action);
+
+    return _possibleConstructorReturn(this, (Action.__proto__ || Object.getPrototypeOf(Action)).apply(this, arguments));
+  }
+
+  _createClass(Action, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'button',
+          {
+            onClick: this.props.handlePick,
+            disabled: !this.props.hasOptions },
+          'What should I do?'
+        )
+      );
+    }
+  }]);
+
+  return Action;
+}(React.Component);
+
+var Options = function (_React$Component4) {
+  _inherits(Options, _React$Component4);
+
+  function Options() {
+    _classCallCheck(this, Options);
+
+    return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
+  }
+
+  _createClass(Options, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'button',
+          { onClick: this.props.handleDeleteOptions },
+          'Remove All Options'
+        ),
+        this.props.options.map(function (option) {
+          return React.createElement(Option, { key: option, optionText: option });
+        })
+      );
+    }
+  }]);
+
+  return Options;
+}(React.Component);
+
+var Option = function (_React$Component5) {
+  _inherits(Option, _React$Component5);
+
+  function Option() {
+    _classCallCheck(this, Option);
+
+    return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
+  }
+
+  _createClass(Option, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        this.props.optionText
+      );
+    }
+  }]);
+
+  return Option;
+}(React.Component);
+
+var AddOption = function (_React$Component6) {
+  _inherits(AddOption, _React$Component6);
+
+  function AddOption(props) {
+    _classCallCheck(this, AddOption);
+
+    var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+
+    _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
+    return _this6;
+  }
+
+  _createClass(AddOption, [{
+    key: 'handleAddOption',
+    value: function handleAddOption(e) {
+      e.preventDefault();
+
+      var option = e.target.options.value.trim();
+
+      if (option) {
+        this.props.handleAddOption();
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'form',
+          { onSubmit: this.handleAddOption },
+          React.createElement(
+            'label',
+            null,
+            'Add Your Decision',
+            React.createElement('input', { type: 'text', name: 'options' })
+          ),
+          React.createElement(
+            'button',
+            { type: 'submit' },
+            'Add Option'
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddOption;
+}(React.Component);
+
+ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
+
+/*Challenges Section*/
+
+//  Create three methods: handleAddOne, handleMinusOnehandleMinusOne, handleReset
+//  Log to print method name
+//  Wire onClick & bind in the constructor
+// class Counter extends React.Component{
+//   constructor(props){
+//     super(props);
+
+//       this.handleAddOne = this.handleAddOne.bind(this);
+//       this.handleMinusOne = this.handleMinusOne.bind(this);
+//       this.handleReset = this.handleReset.bind(this);
+//       this.state = {
+//         count: 0
+//       };
 //   }
-// };
 
-// const removeAllItems = () => {
-//   app.options = [];
-//   renderTemplate();
-// };
+//   handleAddOne(){
+//     this.setState((prevState) => {
+//       return {
+//         count: prevState.count + 1
+//       };
+//     });
+//     console.log(this.state.count);
+//   }
 
+//   handleMinusOne(){
+//     this.setState((prevState) => {
+//       return {
+//         count: prevState.count - 1
+//       };
+//     });
+//     console.log(this.state.count);
+//   }
 
-// const appRoot = document.getElementById('app');
+//   handleReset(){
+//     this.setState((prevState) => {
+//       return {
+//         count: prevState.count = 0
+//       };
+//     });
+//     console.log(this.state.count);
+//   }
 
-// const renderTemplate = () => {
-//   const template = (
-//     <div>
-//       <h1></h1>
-//       <p></p>
-//       <p>{app.options.length}</p>
-//       <ol className="listOfItems">
-//         <li>Item One</li>
-//         <li>Item Two</li>
-//       </ol>
-//       <form onSubmit={onFormSubmit}>
-//         <input type="text" name="option" />
-//         <button>Add Button</button>
-//       </form>
-//        <button onClick={removeAllItems}>Remove All</button>
-//     </div>
-//   );
-
-//   ReactDOM.render(template, appRoot);
+//   render(){
+//     return(
+//       <div>
+//         <h1>Count:{this.state.count}</h1>
+//         <button onClick={this.handleAddOne}>+1</button>
+//         <button onClick={this.handleMinusOne}>-1</button>
+//         <button onClick={this.handleReset}>Reset</button>
+//       </div>
+//     );
+//   }
 // }
 
-// renderTemplate();
+// ReactDOM.render(<Counter />, document.getElementById('app'));
+
+/*NEW CHALLENGE*/
+
+// VisibilityToggle - render, constructor, handleToggleVisibility
+// visibility -> false
+
+// class Visibility extends React.Component {  
+//   constructor(props){
+//     super(props);
+
+//     this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
+
+//     this.state = {
+//       visibilityCount: 0,
+//       visibilityMessage: 'Turned off! Click me to turn on!',
+//       visibilityDescription: '',
+//     };
+//   }
+
+//   handleToggleVisibility(){
+
+//     if(this.state.visibilityCount !== 0){
+//       this.setState((prevState) => {
+//         return {
+//           visibilityCount: prevState.visibilityCount = 0,
+//           visibilityMessage: 'Turned off! Click me to turn on!',
+//           visibilityDescription: ''
+//         };
+//       });
+//     }
 
 
-/* Chuck's Personal Section */
+//     else{
+//       this.setState((prevState) 
+//           visibilityCount: prevState.visibilityCount = 1,
+//           visibilityMessage: 'Turned on! Click to Hide the secret description!',
+//           visibilityDescription: 'Glad you can see this with state now! I wonder if I could have made it easier, but honestly it is an improvement over the last one!'
+//         };
+//       });
+//     }
+//   }
 
-var userInformation = {
-  name: 'Charles',
-  age: 33,
-  randomNumber: function randomNumber() {
-    userInformation.age = Math.ceil(Math.random() * 20);
-    renderTemplate();
-  }
-};
+//   render(){
+//     return(
+//       <div>
+//         <h1>Visibility</h1>
+//         <button onClick={this.handleToggleVisibility}>{this.state.visibilityMessage}</button>
+//       {this.state.visibilityDescription && (
+//         <div>
+//           <p>{this.state.visibilityDescription}</p>
+//         </div>
+//       )}
+//       </div>
+//     );
+//   }
+// }
 
-var addThisUp = function addThisUp() {};
-
-var appRoot = document.getElementById('app');
-
-var renderTemplate = function renderTemplate() {
-  var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'p',
-      null,
-      'Name: ',
-      userInformation.name
-    ),
-    React.createElement(
-      'p',
-      null,
-      'Age: ',
-      userInformation.age
-    ),
-    React.createElement(
-      'button',
-      { onClick: userInformation.randomNumber },
-      'Randomize Your Age'
-    )
-  );
-
-  ReactDOM.render(template, appRoot);
-};
-
-renderTemplate();
+// ReactDOM.render(<Visibility />, document.getElementById('app'));
